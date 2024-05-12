@@ -126,8 +126,7 @@ def add_html_context(
 	"""Add extra variables to the HTML template context."""
 	if doctree and "pyscript" in doctree:
 		app.add_js_file(app.config.pyscript_js, type="module")
-		body = "/*! coi-serviceworker v0.1.7 - Guido Zuidhof and contributors, licensed under MIT *//*! mini-coi - Andrea Giammarchi and contributors, licensed under MIT */(({ document: d, navigator: { serviceWorker: s } }) => {if (d) {const { currentScript: c } = d;s.register(c.src, { scope: c.getAttribute('scope') || '..' }).then(r => {r.addEventListener('updatefound', () => location.reload());if (r.active && !s.controller) location.reload();});}else {addEventListener('install', () => skipWaiting());addEventListener('activate', e => e.waitUntil(clients.claim()));addEventListener('fetch', e => {const { request: r } = e;if (r.cache === 'only-if-cached' && r.mode !== 'same-origin') return;e.respondWith(fetch(r).then(r => {const { body, status, statusText } = r;if (!status || status > 399) return r;const h = new Headers(r.headers);h.set('Cross-Origin-Opener-Policy', 'same-origin');h.set('Cross-Origin-Embedder-Policy', 'require-corp');h.set('Cross-Origin-Resource-Policy', 'cross-origin');return new Response(body, { status, statusText, headers: h });}));});}})(self);"
-		app.add_js_file(None, body=body)
+		app.add_js_file("../mini-coi.js")
 		app.add_css_file(app.config.pyscript_css)
 
 
@@ -154,10 +153,7 @@ def doctree_read(app: Sphinx, doctree: nodes.document):
 			)
 
 def copy_asset_files(app, exc):
-	print('copy_asset_files')
 	if app.builder.format == 'html' and not exc:
-		custom_file = (Path(__file__) / 'mini-coi.js').absolute()
-		print(f"{custom_file=}")
-		static_dir = (Path(app.builder.outdir) / '_static').absolute()
-		print(f"{static_dir=}")
+		custom_file = (Path(__file__).parent / 'mini-coi.js').absolute()
+		static_dir = (Path(app.builder.outdir)).absolute()
 		copy_asset_file(custom_file, static_dir)
