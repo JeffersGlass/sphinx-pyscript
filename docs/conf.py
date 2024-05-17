@@ -1,6 +1,6 @@
 from datetime import date
 
-from sphinx_pyscript import __version__
+from sphinx_pyscript_temp import __version__
 
 # -- Project information -----------------------------------------------------
 

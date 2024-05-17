@@ -3,8 +3,8 @@ requires = ["flit_core >=3.2,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
-name = "sphinx_pyscript"
-authors = [{name = "Chris Sewell", email = "chrisj_sewell@hotmail.com"}]
+name = "sphinx_pyscript_temp"
+authors = [{name = "Chris Sewell", email = "removed@exampled.com"}, {name = "Jeff Glass", email = "glass.jeffrey@gmail.com"}]
 readme = "README.md"
 license = {file = "LICENSE"}
 classifiers = [
